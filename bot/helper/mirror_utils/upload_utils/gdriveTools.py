@@ -898,6 +898,7 @@ class GoogleDriveHelper:
                     if reason not in [
                         'downloadQuotaExceeded',
                         'dailyLimitExceeded',
+                        'storageQuotaExceeded',
                     ]:
                         raise err
                     if USE_SERVICE_ACCOUNTS:
