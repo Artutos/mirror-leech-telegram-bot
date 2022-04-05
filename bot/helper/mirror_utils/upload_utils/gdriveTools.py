@@ -209,6 +209,7 @@ class GoogleDriveHelper:
                         'userRateLimitExceeded',
                         'dailyLimitExceeded',
                         'storageQuotaExceeded',
+                        'insufficientParentPermissions',
                     ]:
                         raise err
                     if USE_SERVICE_ACCOUNTS:
@@ -294,7 +295,7 @@ class GoogleDriveHelper:
         except HttpError as err:
             if err.resp.get('content-type', '').startswith('application/json'):
                 reason = jsnloads(err.content).get('error').get('errors')[0].get('reason')
-                if reason in ['userRateLimitExceeded', 'dailyLimitExceeded', 'storageQuotaExceeded']:
+                if reason in ['userRateLimitExceeded', 'dailyLimitExceeded', 'storageQuotaExceeded', 'insufficientParentPermissions']:
                     if USE_SERVICE_ACCOUNTS:
                         if self.__sa_count == len(listdir("accounts")) or self.__sa_count > 50:
                             self.is_cancelled = True
@@ -900,6 +901,7 @@ class GoogleDriveHelper:
                         'downloadQuotaExceeded',
                         'dailyLimitExceeded',
                         'storageQuotaExceeded',
+                        'insufficientParentPermissions',
                     ]:
                         raise err
                     if USE_SERVICE_ACCOUNTS:
